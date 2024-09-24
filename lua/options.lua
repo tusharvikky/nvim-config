@@ -71,6 +71,10 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+-- Tab settings
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+
 -- Line length marker at 80 columns
 vim.opt.colorcolumn = '80'
 
