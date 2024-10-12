@@ -204,6 +204,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Close all buffers of NeoVim and terminate NeoVim
+vim.keymap.set('n', '<leader>qa', ':qa<CR>', { noremap = true, silent = true })
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
