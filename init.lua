@@ -158,7 +158,7 @@ vim.opt.cursorline = true
 vim.opt.scrolloff = 10
 
 -- [[ Import Basic Keymaps ]]
-require 'lua.custom.keymaps'
+require 'custom.keymaps'
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
