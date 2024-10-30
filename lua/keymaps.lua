@@ -1,6 +1,8 @@
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+local opts = { noremap = true, silent = true }
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -32,10 +34,16 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- window management
-vim.keymap.set('n', '<leader>wv', '<C-w>v', { desc = 'Split window vertically' }) -- split window vertically
-vim.keymap.set('n', '<leader>wh', '<C-w>s', { desc = 'Split window horizontally' }) -- split window horizontally
-vim.keymap.set('n', '<leader>we', '<C-w>=', { desc = 'Make splits equal size' }) -- make split windows equal width & height
-vim.keymap.set('n', '<leader>wx', '<cmd>close<CR>', { desc = 'Close current split' }) -- close current split window
+-- New tab
+vim.keymap.set('n', 'te', ':tabedit<Return>')
+vim.keymap.set('n', '<tab>', ':tabnext<Return>', opts)
+vim.keymap.set('n', '<s-tab>', ':tabprev<Return>', opts)
+
+-- Resize window
+vim.keymap.set('n', '<C-w><left>', '<C-w><')
+vim.keymap.set('n', '<C-w><right>', '<C-w>>')
+vim.keymap.set('n', '<C-w><up>', '<C-w>+')
+vim.keymap.set('n', '<C-w><down>', '<C-w>-')
 
 vim.keymap.set('n', '<leader>to', '<cmd>tabnew<CR>', { desc = 'Open new tab' }) -- open new tab
 vim.keymap.set('n', '<leader>tx', '<cmd>tabclose<CR>', { desc = 'Close current tab' }) -- close current tab
@@ -43,6 +51,12 @@ vim.keymap.set('n', '<leader>tn', '<cmd>tabn<CR>', { desc = 'Go to next tab' }) 
 vim.keymap.set('n', '<leader>tp', '<cmd>tabp<CR>', { desc = 'Go to previous tab' }) --  go to previous tab
 vim.keymap.set('n', '<leader>tf', '<cmd>tabnew %<CR>', { desc = 'Open current buffer in new tab' }) --  move current buffer to new tab
 
+-- Select all
+vim.keymap.set('n', '<C-a>', 'gg<S-v>G')
+
+-- Disable continuations
+vim.keymap.set('n', '<Leader>o', 'o<Esc>^Da', { noremap = true, silent = true, desc = 'Insert new line below' }) -- Inserts new line below the current line and sets insert mode
+vim.keymap.set('n', '<Leader>O', 'O<Esc>^Da', { noremap = true, silent = true, desc = 'Insert new line above' }) -- Inserts new line above the current line and sets insert mode
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
