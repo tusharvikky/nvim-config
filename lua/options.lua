@@ -62,4 +62,30 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = '*.py',
+  callback = function()
+    vim.opt.textwidth = 79
+    vim.opt.colorcolumn = '79'
+  end,
+}) -- python formatting
+
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = { '*.js', '*.html', '*.css', '*.lua' },
+  callback = function()
+    vim.opt.tabstop = 2
+    vim.opt.softtabstop = 2
+    vim.opt.shiftwidth = 2
+  end,
+}) -- javascript formatting
+
+vim.api.nvim_create_autocmd('BufReadPost', {
+  pattern = '*',
+  callback = function()
+    if vim.fn.line '\'"' > 0 and vim.fn.line '\'"' <= vim.fn.line '$' then
+      vim.cmd 'normal! g`"'
+    end
+  end,
+}) -- return to last edit position when opening files
+
 -- vim: ts=2 sts=2 sw=2 et
