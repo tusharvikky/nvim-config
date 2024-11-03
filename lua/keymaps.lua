@@ -57,6 +57,8 @@ vim.keymap.set('n', '<C-a>', 'gg<S-v>G')
 -- Disable continuations
 vim.keymap.set('n', '<Leader>o', 'o<Esc>^Da', { noremap = true, silent = true, desc = 'Insert new line below' }) -- Inserts new line below the current line and sets insert mode
 vim.keymap.set('n', '<Leader>O', 'O<Esc>^Da', { noremap = true, silent = true, desc = 'Insert new line above' }) -- Inserts new line above the current line and sets insert mode
+-- nvim-comment
+vim.keymap.set({ 'n', 'v' }, '<leader>/', ':CommentToggle<cr>', { desc = 'Comment Toggle anything' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
