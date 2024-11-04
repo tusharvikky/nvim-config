@@ -129,7 +129,7 @@ return {
     },
     cmd = 'Neogit',
     keys = {
-      { '<Leader>mg', '<cmd>Neogit<CR>', desc = 'Neogit' },
+      { '<Leader>g', '<cmd>Neogit<CR>', desc = 'Neogit' },
     },
     -- See: https://github.com/TimUntersberger/neogit#configuration
     opts = {
