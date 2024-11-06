@@ -65,6 +65,15 @@ vim.keymap.set('n', '<Leader>O', 'O<Esc>^Da', { noremap = true, silent = true, d
 -- nvim-comment
 vim.keymap.set({ 'n', 'v' }, '<leader>/', ':CommentToggle<cr>', { desc = 'Comment Toggle anything' })
 
+-- [[ File Explorer ]]
+
+vim.keymap.set('n', '<leader>e', function()
+  if vim.api.nvim_buf_get_option(0, 'filetype') == 'netrw' then
+    vim.cmd 'bprev' -- Switch back to previous buffer
+  else
+    vim.cmd 'Explore' -- Open file explorer
+  end
+end, { desc = 'Toggle File Explorer' })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
