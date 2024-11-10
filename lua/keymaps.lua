@@ -65,6 +65,14 @@ vim.keymap.set('n', '<Leader>O', 'O<Esc>^Da', { noremap = true, silent = true, d
 -- nvim-comment
 vim.keymap.set({ 'n', 'v' }, '<leader>/', ':CommentToggle<cr>', { desc = 'Comment Toggle anything' })
 
+-- Move current line/block down/up using Alt+j/k
+vim.keymap.set('n', '<A-j>', ':m .+1<CR>==', { noremap = true, silent = true, desc = 'Move current line/block down' })
+vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { noremap = true, silent = true, desc = 'Move current line/block up' })
+
+-- For visual mode (selecting lines)
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { noremap = true, silent = true, desc = 'Move current line/block down' })
+vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { noremap = true, silent = true, desc = 'Move current line/block up' })
+
 -- [[ File Explorer ]]
 
 vim.keymap.set('n', '<leader>e', function()
