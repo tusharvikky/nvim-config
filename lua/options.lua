@@ -40,7 +40,6 @@ vim.opt.signcolumn = 'yes'
 vim.opt.updatetime = 250
 
 -- Decrease mapped sequence wait time
--- Displays which-key popup sooner
 vim.opt.timeoutlen = 300
 
 -- Configure how new splits should be opened
@@ -87,5 +86,12 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end
   end,
 }) -- return to last edit position when opening files
+
+-- Tab settings
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+
+-- Line length marker at 80 columns
+vim.opt.colorcolumn = '80'
 
 -- vim: ts=2 sts=2 sw=2 et

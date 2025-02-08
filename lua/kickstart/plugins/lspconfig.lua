@@ -8,22 +8,22 @@ return {
     opts = {
       library = {
         -- Load luvit types when the `vim.uv` word is found
-        { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
       },
     },
   },
-  { 'Bilal2453/luvit-meta', lazy = true },
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
-      { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
+      -- Mason must be loaded before its dependents so we need to set it up here.
+      -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
+      { 'williamboman/mason.nvim', opts = {} },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
@@ -150,6 +150,16 @@ return {
         end,
       })
 
+      -- Change diagnostic symbols in the sign column (gutter)
+      -- if vim.g.have_nerd_font then
+      --   local signs = { ERROR = '', WARN = '', INFO = '', HINT = '' }
+      --   local diagnostic_signs = {}
+      --   for type, icon in pairs(signs) do
+      --     diagnostic_signs[vim.diagnostic.severity[type]] = icon
+      --   end
+      --   vim.diagnostic.config { signs = { text = diagnostic_signs } }
+      -- end
+
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
@@ -167,9 +177,24 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
+        bashls = {},
         -- clangd = {},
-        -- gopls = {},
-        -- pyright = {},
+        gopls = {},
+        pyright = {
+          settings = {
+            pyright = {
+              -- Using Ruff's import organizer
+              disableOrganizeImports = true,
+            },
+            python = {
+              -- Ignore all files for analysis to exclusively use Ruff for linting
+              ignore = { '*' },
+            },
+          },
+        },
+        ruff = {
+          settings = {},
+        },
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -181,8 +206,8 @@ return {
         --
 
         lua_ls = {
-          -- cmd = {...},
-          -- filetypes = { ...},
+          -- cmd = { ... },
+          -- filetypes = { ... },
           -- capabilities = {},
           settings = {
             Lua = {
@@ -197,13 +222,16 @@ return {
       }
 
       -- Ensure the servers and tools above are installed
-      --  To check the current status of installed tools and/or manually install
-      --  other tools, you can run
+      --
+      -- To check the current status of installed tools and/or manually install
+      -- other tools, you can run
       --    :Mason
       --
-      --  You can press `g?` for help in this menu.
-      require('mason').setup()
-
+      -- You can press `g?` for help in this menu.
+      --
+      -- `mason` had to be setup earlier: to configure its options see the
+      -- `dependencies` table for `nvim-lspconfig` above.
+      --
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
