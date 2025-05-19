@@ -19,24 +19,15 @@ return {
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true, sql = true, java = true }
-        local lsp_format_opt
+        local disable_filetypes = { c = true, cpp = true }
         if disable_filetypes[vim.bo[bufnr].filetype] then
-          lsp_format_opt = 'never'
+          return nil
         else
-          lsp_format_opt = 'fallback'
+          return {
+            timeout_ms = 500,
+            lsp_format = 'fallback',
+          }
         end
-
-        -- Disable autoformat for files in a certain path
-        local bufname = vim.api.nvim_buf_get_name(bufnr)
-        if bufname:match '/node_modules/' then
-          return
-        end
-
-        return {
-          timeout_ms = 1000,
-          lsp_format = lsp_format_opt,
-        }
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
